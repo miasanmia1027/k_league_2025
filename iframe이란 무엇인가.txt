@@ -1,0 +1,13 @@
+iframe이란 창(HTML) 안에서 창을 보여주는 것이다.
+
+iframe의 문제점==iframe이 있으면 크롤링을 할때 id나 class를 찾으라고 해도 바깥에 있는 html구조에서 찾기만하지 안에 있는html코드 까지는 찾지 않아서 크롤링이 안된다
+
+해결하는 법=
+
+driver.get("url")
+
+driver.switch_to.frame("Dialogue Window")
+
+driver.switch_to.frame(driver.find_element_by_css_selector("iframe[name='Dialogue Window']"))
+
+이렇게 iframe으로 바꾼다음에 find하면 된다
