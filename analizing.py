@@ -35,13 +35,43 @@ k_league_name_list = [
 
 def csv_file_tablet(data_name):
     df = pd.read_csv(f"C:\Codng\K_league\k_league\data_{data_name}.csv")
-    print(data_name)
     df["data"] = df["data"].astype("string")
     df["data"] = df["data"].str.replace(r",", r"", regex=False)
 
 
 for x in k_league_name_list:
     csv_file_tablet(x)
+# 여기까지는 data열에 있는 .을 뺴주는 작업
+
+print("여기까지는 끝")
+
+울산 = None
+김천 = None
+광원 = None
+수원FC = None
+포항 = None
+서울 = None
+광주 = None
+제주 = None
+대전 = None
+전북 = None
+대구 = None
+인천 = None
+
+for name in k_league_name_list:
+    name_remain = name
+    nameDF = pd.read_csv(f"C:\Codng\K_league\k_league\data_{name}.csv")
+
+    for inside in range(11):
+        # print(type(name_remain))
+        # print(type(k_league_name_list[inside]))
+        print(name_remain)
+        print(k_league_name_list[inside])
+        if name_remain == k_league_name_list[inside]:
+            print(k_league_name_list[inside])
+            k_league_name_list[inside] = nameDF
+
+
 # ------------------------------------------------------------
 # 여기까지가 지금 모든 구단의 데이터를 가져온것
 
