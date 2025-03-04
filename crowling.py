@@ -4,6 +4,7 @@ import time
 import pandas as pd
 import json
 import os
+import pickle
 
 folder_name = "team_data"
 os.makedirs(folder_name, exist_ok=True)
@@ -87,34 +88,48 @@ elements = driver.find_element(
     "body > div.wrap > div.header > div > div.headerLeft > div.main-menu > ul > li:nth-child(1) > a",
 ).click()
 
-time.sleep(3)
+time.sleep(1)
 
 elements = driver.find_element(
     By.CSS_SELECTOR, "body > div.wrap > div.sub-menu > div > ul > li:nth-child(2) > a"
 ).click()
 
-time.sleep(3)
+time.sleep(1)
 
+# 팀순위를 가져오는 코드를 짜보자
+# 승점을 사용하여 하는 방식을 채택
+name_points=[]
+for i in range(1,13):
+    name = driver.find_element(By.XPATH, f"//*[@id='teamRankLayer1']/table/tbody/tr[{i}]/td[3]")
+    points = driver.find_element(By.XPATH, f"//*[@id='teamRankLayer1']/table/tbody/tr[{i}]/td[5]")
+    name_points.append({"name": name.text, "points": points.text})
+df_made = pd.DataFrame(name_points)
+
+def find_where_name(team_name):
+    name_points = df_made
+    for num in range(0,12):
+        if name_points["name"][num] == team_name:
+            index = num-1
+    return index
 
 def fetch_team_data(team_name, team_number):
+    index = int(find_where_name(team_name))
     # 팀 선택 요소 클릭
     elements = driver.find_element(By.ID, f"selectTeamEmble_K{team_number}").click()
-
+    
     # 데이터 로드 시간 대기
-    time.sleep(3)
+    time.sleep(2)
 
     # 데이터 수집
     data_list = driver.find_elements(By.CLASS_NAME, "total-search-chart-datalabel")
-
-    # 라벨 목록 (필요한 라벨 리스트를 미리 정의)
-    
 
     # 데이터 저장할 리스트
     data_list_team = []
 
     # 수집한 데이터를 라벨과 함께 저장
     for i in range(44):
-        data_list_team.append({"label": labels[i], "data": (data_list[i]).text})
+        data_list_team.append({"label": labels[i], "data": (data_list[i]).text,"points": name_points[index]["points"]})
+
 
     # 데이터프레임으로 변환
     df_team = pd.DataFrame(data_list_team)
@@ -139,17 +154,6 @@ fetch_team_data("제주", "04")
 fetch_team_data("포항", "03")
 
 time.sleep(3)
-
-# 팀순위를 가져오는 코드를 짜보자
-# 승점을 사용하여 하는 방식을 채택
-name_points=[]
-for i in range(1,13):
-    name = driver.find_element(By.XPATH, f"//*[@id='teamRankLayer1']/table/tbody/tr[{i}]/td[3]")
-    points = driver.find_element(By.XPATH, f"//*[@id='teamRankLayer1']/table/tbody/tr[{i}]/td[5]")
-    name_points.append({"label": name.text, "data": points.text})
-df_made = pd.DataFrame(name_points)
-df_made.to_csv(f"name_points.txt", index=False)
-
 
 
 driver.close()
