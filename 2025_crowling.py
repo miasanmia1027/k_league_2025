@@ -6,7 +6,7 @@ import json
 import os
 import pickle
 
-folder_name = "team_data"
+folder_name = "2025_team_data"
 os.makedirs(folder_name, exist_ok=True)
 
 labels = [
@@ -135,7 +135,7 @@ def fetch_team_data(team_name, team_number):
     df_team = pd.DataFrame(data_list_team)
 
     # CSV 파일로 저장
-    df_team.to_csv(f"team_data\{team_name}.txt", index=False)
+    df_team.to_csv(f"2025_team_data\{team_name}.txt", index=False)
 
     print(f"{team_name} 팀 데이터 저장 완료!")
 
