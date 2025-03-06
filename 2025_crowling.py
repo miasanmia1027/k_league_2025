@@ -2,9 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
 import pandas as pd
-import json
 import os
-import pickle
 
 folder_name = "2025_team_data"
 os.makedirs(folder_name, exist_ok=True)
@@ -135,7 +133,7 @@ def fetch_team_data(team_name, team_number):
     df_team = pd.DataFrame(data_list_team)
 
     # CSV 파일로 저장
-    df_team.to_csv(f"2025_team_data\{team_name}.txt", index=False)
+    df_team.to_csv(f"2025_team_data\{team_name}.csv", index=False)
 
     print(f"{team_name} 팀 데이터 저장 완료!")
 

@@ -13,7 +13,7 @@ driver.implicitly_wait(3)
 
 season = driver.find_element(By.ID,"year").click()
 time.sleep(1)
-year = team_2024 = driver.find_element(By.XPATH, "//*[@id='year']/option[2]").click()
+team_2024 = driver.find_element(By.XPATH, "//*[@id='year']/option[2]").click()
 
 def get_score():
     no_name1 = []
@@ -43,10 +43,11 @@ def get_score():
         every_list.append({
             "name": every_name[i_2],
             "points": split_result[i_2][0],
-            "draw": split_result[i_2][1],
-            "loss": split_result[i_2][2],
-            "goals": split_result[i_2][3],
-            "loss_goal": split_result[i_2][4]
+            "win": split_result[i_2][1],
+            "draw": split_result[i_2][2],
+            "loss": split_result[i_2][3],
+            "goals": split_result[i_2][4],
+            "loss_goal": split_result[i_2][5]
         })
     return every_list
 

@@ -1,4 +1,3 @@
-
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
@@ -120,9 +119,9 @@ def fetch_team_data(team_name, team_number):
 
     # 데이터프레임으로 변환
     df_team = pd.DataFrame(data_list_team)
-
     # CSV 파일로 저장
-    df_team.to_csv(f"2024_team_data\{team_name}.txt", index=False)
+    df_team.to_csv(f"2024_team_data/raw_data\{team_name}.csv", index=False, encoding="utf-8-sig")
+
 
     print(f"{team_name} 팀 데이터 저장 완료!")
 
